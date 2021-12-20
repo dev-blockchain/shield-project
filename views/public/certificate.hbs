@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Final Certificate</title>
+    <!-- inject:css -->
+    <!--    <link rel="stylesheet" href="css/bootstrap-grid.css">-->
+    <link rel="stylesheet" href="assets/certificate.css">
+    <script src="https://unpkg.com/rough-viz@1.0.4"></script>
+    <style>
+        .wrapper {
+            display: flex;
+            flex: wrap;
+            order: row;
+        }
+    </style>
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta content='#2a41e8' name='theme-color'/>
+</head>
+
+<body>
+
+<!-- Print Button -->
+<div class="print-button-container">
+    <a href="javascript:window.print()" class="print-button">Print this</a>
+</div>
+<!-- Invoice -->
+
+<!-- Invoice -->
+<div id="invoice" style="margin-bottom: 0px;">
+
+    <!-- Header -->
+    <div class="row">
+        <div class="col-xl-6">
+            <div id="logo"><img src="assets/logo.png" alt=""></div>
+        </div>
+
+        <div class="col-xl-6">
+
+            <p id="details">
+    <strong>Name:</strong> {{name}} <br>
+                <strong>Issued Date:</strong> {{date}} <br>
+                <strong>User ID:</strong> #{{random_num}}
+                <br><strong>Age:</strong> {{age}}
+                <br><strong>Gender:</strong> {{gender}}
+            </p>
+        </div>
+    </div>
+    <style>
+        .circle-wrap {
+            margin: 50px auto;
+            width: 150px;
+            height: 150px;
+            background: #e6e2e7;
+            border-radius: 50%;
+        }
+
+        .circle-wrap .circle .mask,
+        .circle-wrap .circle .fill {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .circle-wrap .circle .mask {
+            clip: rect(0px, 150px, 150px, 75px);
+        }
+
+        .circle-wrap .circle .mask .fill {
+            clip: rect(0px, 75px, 150px, 0px);
+            background-color: #2a41e8;
+        }
+        .circle-wrap .circle .mask.full,
+        .circle-wrap .circle .fill {
+            animation: fill ease-in-out 3s;
+            transform: rotate({{pie_deg}}deg);
+        }
+
+        @keyframes fill {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate({{pie_deg}}deg);
+            }
+        }
+
+        .circle-wrap .inside-circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #fff;
+            line-height: 130px;
+            text-align: center;
+            margin-top: 10px;
+            margin-left: 10px;
+            position: absolute;
+            z-index: 100;
+            font-weight: 700;
+            font-size: 2em;
+        }
+    </style>
+
+    <!--    <div class="wrapper">-->
+    <!--    <div id="vis0"></div>-->
+    <!--    <div id="vis1"></div>-->
+    <!--    </div>-->
+    <!-- Client & Supplier -->
+    <div class="row">
+        <div class="col-xl-12" style="margin: auto;">
+            <div class="circle-wrap">
+                <div class="circle">
+
+                    <div class="mask full">
+                        <div class="fill"></div>
+                    </div>
+
+                    <div class="mask half">
+                        <div class="fill"></div>
+                    </div>
+
+                    <div class="inside-circle">
+                        {{temp_score}}%
+                    </div>
+
+                </div>
+                <br><br><br><br><br><br>
+                <h3 style="text-align: center;">Final Score</h3>
+            </div>
+
+        </div>
+        <br><br><br><br>
+
+
+        <div class="row">
+            <div class="col-xl-12 padding-top-100 margin-top-100" style="text-align: center;">
+                <br><br>
+                <p style="font-size: 1.2rem;">This is to certify that <strong>{{name}}</strong> has successfully passed <i>Uncle Shield's</i> basic assessment of <span style="color: blue;">Shield Protocol</span> with an aggregate score of
+                    <strong>{{temp_score}}%</strong>. You are now ready to dive deep into <span style="color: blue;">Shield protocol</span>!</p>
+            </div>
+        </div>
+        <!-- Invoice -->
+<!--        <div class="row">-->
+<!--            <div class="col-xl-12">-->
+<!--                <table class="margin-top-0">-->
+<!--                    <tr>-->
+<!--                        <th>Name</th>-->
+<!--                        <th>Recommended Action</th>-->
+<!--                    </tr>-->
+
+<!--                    <tr>-->
+<!--                        <td>{{name}}</td>-->
+<!--                        <td>{{temp_score}}%</td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--            </div>-->
+
+<!--            <div class="col-xl-12 col-xl-offset-8">-->
+<!--                <table id="totals">-->
+<!--                    <tr>-->
+<!--                        <th>Conclusion: </th>-->
+<!--                        <th><span>{{temp_score}}%</span></th>-->
+<!--                    </tr>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+        <br><br><br>
+
+        <div class="wrapper align-center margin-left-150 margin-top-50" style="margin-top: 40px; margin-bottom: 0px;" align="center">
+            <div id="vis1"></div>
+            <div id="vis0"></div>
+        </div>
+
+
+        <!-- Footer -->
+        <div class="row" style="margin-top: 0px; margin-bottom: 0px;">
+            <div class="col-xl-12">
+                <ul id="footer">
+                    <li><span>uncle.shield</span></li>
+                    <li>contact@uncle.shield</li>
+                    <!--                    <li>+91 123-456-7890</li>-->
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    new roughViz.BarH(
+            { element: '#vis0', titleFontSize: '1.5rem',
+//       margin: {top: 50, bottom: 100, left: 60, right: 0},
+                data: { labels: ['Core', 'General','Security', 'Governance', 'Defi'],  values: [18,5,27,35,15] },
+                color: 'tan', labels: 'Type', values: 'Percentage', title: "Test Composition", roughness: 4, });
+
+    new roughViz.Pie(
+            { element: '#vis1', titleFontSize: '1.5rem',
+                // legend: false,
+                margin: {top: 50, bottom: 0, left: 50, right: 40}, data: { labels: ['basic knowledge', 'familiarity', 'practical'], values: [48,32,20] },
+                title: "Test Plan", strokeWidth: 3, fillStyle: 'zigzag-line', highlight: 'gold', });
+
+
+</script>
+<script>
+    var speech = new SpeechSynthesisUtterance(`Your score is {{temp_score}} percent.`);
+    speech.lang = 'en-US'; window.speechSynthesis.speak(speech);
+</script>
+
+</body>
+</html>
